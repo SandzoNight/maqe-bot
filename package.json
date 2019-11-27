@@ -9,7 +9,8 @@
     "jest": "^24.9.0"
   },
   "scripts": {
-    "test": "jest --watchAll",
+    "test:dev": "jest --watch",
+    "test": "jest",
     "start": "node index.js"
   }
 }
