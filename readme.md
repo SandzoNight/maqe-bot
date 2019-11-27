@@ -3,7 +3,9 @@
 
 # To Start
 `yarn start <bot-command>` to command the bot. eg. `yarn start RW15RW1`
+
 or
+
 `node index.js <bot-command>` eg. `node index.js RW15RW1`
 
 # To Test
