@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "SandzoNight",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SandzoNight/maqe-bot.git"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "jest": "^24.9.0"
