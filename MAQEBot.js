@@ -97,7 +97,7 @@ module.exports = class MAQEBot {
                 break
             }
         }
-        this.totalSteps += step
+        this.totalSteps += Math.abs(step)
     }
     
     mapFacingDirectionToAngle(facingDirection) {
