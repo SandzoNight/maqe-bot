@@ -18,15 +18,17 @@ module.exports = class MAQEBot {
         }
         for (let i = 0; i < command.length; i++) {
             const char = command.charAt(i)
-            if (char === 'R' || char === 'L') {
-                this.changeDirection(char)
-                continue
-            } else if (char === 'W') {
+            if (char === 'R' || char === 'L' || char === 'W' || char === 'B') {
+                let stepsString
+                if (char === 'W' || char === 'R' || char === 'L') {
+                    stepsString = ''
+                } else if (char === 'B') {
+                    stepsString = '-'
+                }
                 const restCommand = command.substring(i+1)
                 if (restCommand) {
                     const firstFollowingChar = restCommand.charAt(0)
                     if (!isNaN(firstFollowingChar)) {
-                        let stepsString = ''
                         for (let j = 0; j < restCommand.length; j++ ) {
                             if (isNaN(restCommand.charAt(j)) === false) {
                                 stepsString += parseInt(restCommand.charAt(j))
@@ -35,16 +37,22 @@ module.exports = class MAQEBot {
                                 break
                             }
                         }
-                        if (stepsString) {
+                        if (char === 'W' || char === 'B') {
                             this.walk(parseInt(stepsString))
-                            continue
-                        } else {
-                            throw Error(`'W' command must be followed by number (command index: ${i}, ${command})`)
                         }
+                        if (char === 'R' || char === 'L') {
+                            const turn = parseInt(stepsString)
+                            for (let i = 0; i < turn; i++) {
+                                this.changeDirection(char)
+                            }
+                        }
+                        continue
                     }
-                    throw Error(`'W' command must be followed by number (command index: ${i}, ${command})`)
-                } else {
-                    throw Error(`'W' command must be followed by number (command index: ${i}, ${command})`)
+                }
+                if (char === 'W' || char === 'B') {
+                    this.walk(parseInt(stepsString+1))
+                } else if (char === 'R' || char === 'L') {
+                    this.changeDirection(char)
                 }
             }
         }

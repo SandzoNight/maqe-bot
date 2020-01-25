@@ -32,6 +32,7 @@ test('bot should be able to process valid commands', () => {
         'LLLLLW99RRRRRW88LLLRL',
         'W55555RW555555W444444W1',
         'LLRRR',
+        'LW'
     ]
     
     commandList.forEach(command => {
@@ -146,10 +147,71 @@ test('bot should walk equals to total steps', () => {
             command: 'LLRRR',
             totalSteps: 0,
         },
+        {
+            command: 'LLRRRW',
+            totalSteps: 1,
+        },
     ]
     commandList.forEach(commandObject => {
         const bot = new MAQEBot()
         bot.processCommand(commandObject.command)
         expect(bot.totalSteps).toEqual(commandObject.totalSteps)
+    })
+})
+
+test('bot should be at X:15 Y:1 Direction:South', () => {
+    const commandList = [
+        {
+            command: 'RW15RB1',
+        },
+    ]
+    commandList.forEach(commandObject => {
+        const bot = new MAQEBot()
+        bot.processCommand(commandObject.command)
+        expect(bot.positionX).toEqual(15)
+        expect(bot.positionY).toEqual(1)
+        expect(bot.facingDirection).toEqual('South')
+    })
+})
+
+test('bot can walk backwards', () => {
+    const commandList = [
+        {
+            command: 'W15B15',
+            x: 0,
+            y: 0,
+            direction: 'North',
+        },
+        {
+            command: 'W14R2W1B1',
+            x: 0,
+            y: 14,
+            direction: 'South',
+        }
+    ]
+    commandList.forEach(commandObject => {
+        const bot = new MAQEBot()
+        bot.processCommand(commandObject.command)
+        expect(bot.positionX).toEqual(commandObject.x)
+        expect(bot.positionY).toEqual(commandObject.y)
+        expect(bot.facingDirection).toEqual(commandObject.direction)
+    })
+})
+
+test('can specify turning amount to bot', () => {
+    const commandList = [
+        {
+            command: 'R2L1LR2',
+            direction: 'South',
+        },
+        {
+            command: 'RRRLLL4LRW1',
+            direction: 'East',
+        }
+    ]
+    commandList.forEach(commandObject => {
+        const bot = new MAQEBot()
+        bot.processCommand(commandObject.command)
+        expect(bot.facingDirection).toEqual(commandObject.direction)
     })
 })
